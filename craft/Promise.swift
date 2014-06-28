@@ -25,22 +25,16 @@ class Promise
     
     func then(resolve: Result?, reject: Result?) -> Promise?
     {
-        deffered.onResolved = resolve
-        deffered.onRejected = reject
-        
         let p = Craft.promise()
         
-        deffered.addChild(p)
+        deffered.addChild(resolve, reject: reject, p: p)
         
         return p;
     }
     
     func then(resolve: Result?) -> Promise?
     {
-        return then(resolve, reject: {
-            (value: AnyObject?) -> AnyObject? in
-                return nil;
-            })
+        return then(resolve, reject: nil)
     }
     
     func then() -> Promise?
@@ -50,9 +44,6 @@ class Promise
     
     func catch(reject: Result) -> Promise?
     {
-        return then({
-            (value: AnyObject?) -> AnyObject? in
-                return nil;
-        }, reject: reject)
+        return then(nil, reject: reject)
     }
 }

@@ -12,12 +12,21 @@ typealias Result = (value: AnyObject?) -> AnyObject?
 
 class Deferred
 {
-    var onResolved: Result?
-    var onRejected: Result?
+    class Child
+    {
+        var onResolved: Result?
+        var onRejected: Result?
+        var promise: Promise
+        
+        init(promise: Promise)
+        {
+            self.promise = promise
+        }
+    }
     
     var promise: Promise!
     
-    var children: Array<Promise>
+    var children: Array<Child>
     
     class func create() -> Deferred
     {
@@ -32,21 +41,55 @@ class Deferred
         children = Array()
     }
     
-    func addChild(p: Promise)
+    func addChild(resolve: Result?, reject: Result?, p: Promise)
     {
-        children.append(p)
+        let c = Child(promise: p)
+        c.onResolved = resolve
+        c.onRejected = reject
+        
+        children.append(c)
     }
     
     func resolve(value: AnyObject?)
     {
         promise.state = PromiseState.FULFILLED
         
-        if let r = onResolved
+        for c in children
+        {
+            resolveChild(c, value: value)
+        }
+    }
+    
+    func reject(value: AnyObject?)
+    {
+        promise.state = PromiseState.REJECTED
+        
+        for c in children
+        {
+            if let r = c.onRejected
+            {
+                let v: AnyObject? = r(value: value)
+                
+                //only fire once
+                c.onRejected = nil
+                
+                c.promise.deffered.reject(v)
+                continue;
+            }
+            
+            c.promise.deffered.reject(value)
+        }
+    }
+    
+    //MARK: should be private
+    func resolveChild(child: Child, value: AnyObject?)
+    {
+        if let r = child.onResolved
         {
             let v: AnyObject? = r(value: value)
             
             //only fire once
-            onResolved = nil
+            child.onResolved = nil
             
             if (resolutionIsTypeError(v))
             {
@@ -66,59 +109,24 @@ class Deferred
                     self.resolve(value)
                     
                     return nil
-                }, reject: {
-                    (value: AnyObject?) -> AnyObject? in
-                    
-                    self.reject(value)
-                    
-                    return nil
-                })
+                    }, reject: {
+                        (value: AnyObject?) -> AnyObject? in
+                        
+                        self.reject(value)
+                        
+                        return nil
+                    })
                 
                 return
             }
             
             //TODO: consider how/if to handle 2.3.3
             
-            resolveChildren(v)
+            child.promise.deffered.resolve(v)
             return
         }
         
-        resolveChildren(value)
-    }
-    
-    func reject(value: AnyObject?)
-    {
-        promise.state = PromiseState.REJECTED
-        
-        if let r = onRejected
-        {
-            let v: AnyObject? = r(value: value)
-            
-            //only fire once
-            onRejected = nil
-            
-            rejectChildren(v)
-            return
-        }
-        
-        rejectChildren(value)
-    }
-    
-    //MARK: should be private
-    func resolveChildren(value: AnyObject?)
-    {
-        for p in children
-        {
-            p.deffered.resolve(value)
-        }
-    }
-    
-    func rejectChildren(value: AnyObject?)
-    {
-        for p in children
-        {
-            p.deffered.reject(value)
-        }
+        child.promise.deffered.resolve(value)
     }
     
     func valueIsPromise(value: AnyObject?) -> Bool

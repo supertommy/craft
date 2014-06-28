@@ -110,6 +110,31 @@ class craftTests: XCTestCase
         });
     }
     
+    func testMultiThen()
+    {
+        let expectation1 = expectationWithDescription("multiThen1");
+        let expectation2 = expectationWithDescription("multiThen2");
+        
+        let p : Promise = createImmediateResolvePromise()
+        
+        p.then({
+            (value: AnyObject?) -> AnyObject? in
+            expectation1.fulfill()
+            return nil
+        })
+        
+        p.then({
+            (value: AnyObject?) -> AnyObject? in
+            expectation2.fulfill()
+            return nil
+        })
+        
+        waitForExpectationsWithTimeout(5.0, handler: {
+            (error: NSError!) -> () in
+            
+        });
+    }
+    
     func testChainable()
     {
         let expectation = expectationWithDescription("chainable");
