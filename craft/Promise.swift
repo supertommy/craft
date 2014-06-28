@@ -8,26 +8,34 @@
 
 import Foundation
 
-typealias Result = (value: AnyObject?) -> AnyObject?
+enum PromiseState
+{
+    case PENDING, FULFILLED, REJECTED
+}
 
 class Promise
 {
-    var onResolved: Result?
-    var onRejected: Result?
+    let deffered: Deferred
+    var state: PromiseState = PromiseState.PENDING
     
-    init()
+    init(deferred d: Deferred)
     {
+        self.deffered = d
     }
     
-    func then(resolve: Result, reject: Result) -> Promise?
+    func then(resolve: Result?, reject: Result?) -> Promise?
     {
-        self.onResolved = resolve
-        self.onRejected = reject
+        deffered.onResolved = resolve
+        deffered.onRejected = reject
         
-        return Promise()
+        let p = Craft.promise()
+        
+        deffered.addChild(p)
+        
+        return p;
     }
     
-    func then(resolve: Result) -> Promise?
+    func then(resolve: Result?) -> Promise?
     {
         return then(resolve, reject: {
             (value: AnyObject?) -> AnyObject? in
@@ -35,19 +43,16 @@ class Promise
             })
     }
     
-    func resolve(value: AnyObject?)
+    func then() -> Promise?
     {
-        if let r = onResolved
-        {
-            r(value: value)
-        }
+        return then(nil, nil)
     }
     
-    func reject(value: AnyObject?)
+    func catch(reject: Result) -> Promise?
     {
-        if let r = onRejected
-        {
-            r(value: value)
-        }
+        return then({
+            (value: AnyObject?) -> AnyObject? in
+                return nil;
+        }, reject: reject)
     }
 }

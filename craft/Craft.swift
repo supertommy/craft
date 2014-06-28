@@ -14,15 +14,16 @@ class Craft
 {
     class func promise() -> Promise
     {
-        return Promise()
+        let d = Deferred.create()
+        return d.promise;
     }
     
     class func promise(action: Action) -> Promise
     {
-        let p = Promise();
+        let d = Deferred.create()
         
-        action(resolve: p.resolve, reject: p.reject)
+        action(resolve: d.resolve, reject: d.reject)
         
-        return p;
+        return d.promise;
     }
 }
