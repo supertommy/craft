@@ -14,15 +14,23 @@ class Craft
 {
     class func promise() -> Promise
     {
-        let d = Deferred.create()
-        return d.promise;
+        return promise(nil)
     }
     
-    class func promise(action: Action) -> Promise
+    class func promise(action: Action?) -> Promise
     {
         let d = Deferred.create()
         
-        action(resolve: d.resolve, reject: d.reject)
+        let q = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0)
+        dispatch_async(q, {
+            
+            dispatch_sync(dispatch_get_main_queue(), {
+                if let a = action
+                {
+                    a(resolve: d.resolve, reject: d.reject)
+                }
+            })
+        })
         
         return d.promise;
     }

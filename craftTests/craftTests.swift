@@ -25,37 +25,89 @@ class craftTests: XCTestCase
         super.tearDown()
     }
     
-    func testCanCreatePromise()
+    func testCreatePromise()
     {
-        // This is an example of a functional test case.
-        //XCTAssert(true, "Pass")
-        
         let p : Promise = Craft.promise()
         
         XCTAssertNotNil(p, "promise was not created")
     }
     
-    func testThenable()
+    //spec 2.2.4
+    func testResolveAsync()
     {
-        let p : Promise = Craft.promise()
+        let expectation = expectationWithDescription("resolveAsync");
+        
+        let p : Promise = createImmediateResolvePromise()
         p.then({
             (value: AnyObject?) -> AnyObject? in
+            
+            expectation.fulfill()
+            
+            return nil;
+        })
+        
+        waitForExpectationsWithTimeout(5.0, handler: {
+            (error: NSError!) -> () in
+            
+        });
+    }
+    
+    //spec 2.2.4
+    func testRejectAsync()
+    {
+        let expectation = expectationWithDescription("rejectAsync");
+        
+        let p : Promise = createImmediateRejectPromise()
+        p.then(nil, reject: {
+            (value: AnyObject?) -> AnyObject? in
+            
+            expectation.fulfill()
+            
+            return nil;
+        })
+        
+        waitForExpectationsWithTimeout(5.0, handler: {
+            (error: NSError!) -> () in
+            
+        });
+    }
+    
+    func testThenable()
+    {
+        let expectation = expectationWithDescription("thenable");
+        
+        let p : Promise = createImmediateResolvePromise()
+        p.then({
+            (value: AnyObject?) -> AnyObject? in
+            expectation.fulfill()
             return nil;
         },
         reject: {
             (value: AnyObject?) -> AnyObject? in
             return nil;
         })
+        
+        waitForExpectationsWithTimeout(5.0, handler: {
+            (error: NSError!) -> () in
+            
+        });
     }
     
     func testThenableNoReject()
     {
-        let p : Promise = Craft.promise()
+        let expectation = expectationWithDescription("thenableNoReject");
+        
+        let p : Promise = createImmediateResolvePromise()
         p.then({
             (value: AnyObject?) -> AnyObject? in
+            expectation.fulfill()
             return nil;
         })
         
+        waitForExpectationsWithTimeout(5.0, handler: {
+            (error: NSError!) -> () in
+            
+        });
     }
     
     func testChainable()
@@ -82,7 +134,7 @@ class craftTests: XCTestCase
             return nil;
         })
         
-        waitForExpectationsWithTimeout(1.5, handler: {
+        waitForExpectationsWithTimeout(5.0, handler: {
             (error: NSError!) -> () in
             
         });
@@ -105,7 +157,7 @@ class craftTests: XCTestCase
             return nil
         })
         
-        waitForExpectationsWithTimeout(1.5, handler: {
+        waitForExpectationsWithTimeout(5.0, handler: {
             (error: NSError!) -> () in
             
         });
@@ -128,7 +180,7 @@ class craftTests: XCTestCase
             return nil
         })
         
-        waitForExpectationsWithTimeout(1.5, handler: {
+        waitForExpectationsWithTimeout(5.0, handler: {
             (error: NSError!) -> () in
             
         });
@@ -154,7 +206,7 @@ class craftTests: XCTestCase
             return nil;
         })
         
-        waitForExpectationsWithTimeout(30.0, handler: {
+        waitForExpectationsWithTimeout(5.0, handler: {
             (error: NSError!) -> () in
             
         });
@@ -175,7 +227,7 @@ class craftTests: XCTestCase
             return nil;
         })
         
-        waitForExpectationsWithTimeout(1.5, handler: {
+        waitForExpectationsWithTimeout(5.0, handler: {
             (error: NSError!) -> () in
             
         });
@@ -199,7 +251,7 @@ class craftTests: XCTestCase
             return nil
         })
         
-        waitForExpectationsWithTimeout(1.5, handler: {
+        waitForExpectationsWithTimeout(5.0, handler: {
             (error: NSError!) -> () in
             
         });
@@ -220,21 +272,31 @@ class craftTests: XCTestCase
             return nil
         })
         
-        waitForExpectationsWithTimeout(1.5, handler: {
+        waitForExpectationsWithTimeout(5.0, handler: {
             (error: NSError!) -> () in
             
         });
     }
     
-    func testPerformanceExample()
+    //MARK: helpers
+    func createImmediateResolvePromise() -> Promise
     {
-        // This is an example of a performance test case.
-        self.measureBlock() {
-            // Put the code you want to measure the time of here.
-        }
+        return Craft.promise({
+            (resolve: (value: AnyObject?) -> (), reject: (value: AnyObject?) -> ()) -> () in
+            
+            resolve(value: "immediate resolve")
+        })
     }
     
-    //MARK: helpers
+    func createImmediateRejectPromise() -> Promise
+    {
+        return Craft.promise({
+            (resolve: (value: AnyObject?) -> (), reject: (value: AnyObject?) -> ()) -> () in
+            
+            reject(value: "immediate reject")
+        })
+    }
+    
     func createWillResolvePromise() -> Promise
     {
         return createWillResolvePromise("resolved")
@@ -248,7 +310,7 @@ class craftTests: XCTestCase
             //some async action
             let queue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0)
             dispatch_async(queue, {
-                usleep(500 * 1000)
+                usleep(250 * 1000)
                 
                 dispatch_sync(dispatch_get_main_queue(), {
                     resolve(value: value)
@@ -270,7 +332,7 @@ class craftTests: XCTestCase
             //some async action
             let queue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0)
             dispatch_async(queue, {
-                usleep(500 * 1000)
+                usleep(250 * 1000)
                 
                 dispatch_sync(dispatch_get_main_queue(), {
                     reject(value: value)
