@@ -10,10 +10,27 @@
 		65E7E024195F1D75003A0280 /* craft.h in Headers */ = {isa = PBXBuildFile; fileRef = 65E7E023195F1D75003A0280 /* craft.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		65E7E02A195F1D75003A0280 /* craft.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 65E7E01E195F1D75003A0280 /* craft.framework */; };
 		65E7E031195F1D75003A0280 /* craftTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65E7E030195F1D75003A0280 /* craftTests.swift */; };
+		65E7E03B195F1DDB003A0280 /* Craft.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65E7E03A195F1DDB003A0280 /* Craft.swift */; };
+		65E7E03D195F20B4003A0280 /* Promise.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65E7E03C195F20B4003A0280 /* Promise.swift */; };
+		65E7E048195F21E9003A0280 /* craft.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 65E7E01E195F1D75003A0280 /* craft.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
 		65E7E02B195F1D75003A0280 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 65E7E015195F1D75003A0280 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 65E7E01D195F1D75003A0280;
+			remoteInfo = craft;
+		};
+		65E7E049195F21E9003A0280 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 65E7E015195F1D75003A0280 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 65E7E01D195F1D75003A0280;
+			remoteInfo = craft;
+		};
+		65E7E04E195F50C9003A0280 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 65E7E015195F1D75003A0280 /* Project object */;
 			proxyType = 1;
@@ -29,6 +46,9 @@
 		65E7E029195F1D75003A0280 /* craftTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = craftTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		65E7E02F195F1D75003A0280 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		65E7E030195F1D75003A0280 /* craftTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = craftTests.swift; sourceTree = "<group>"; };
+		65E7E03A195F1DDB003A0280 /* Craft.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Craft.swift; sourceTree = "<group>"; };
+		65E7E03C195F20B4003A0280 /* Promise.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Promise.swift; sourceTree = "<group>"; };
+		65E7E042195F21E9003A0280 /* craft Tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "craft Tests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -44,6 +64,14 @@
 			buildActionMask = 2147483647;
 			files = (
 				65E7E02A195F1D75003A0280 /* craft.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		65E7E03F195F21E9003A0280 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				65E7E048195F21E9003A0280 /* craft.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -64,6 +92,7 @@
 			children = (
 				65E7E01E195F1D75003A0280 /* craft.framework */,
 				65E7E029195F1D75003A0280 /* craftTests.xctest */,
+				65E7E042195F21E9003A0280 /* craft Tests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -73,6 +102,8 @@
 			children = (
 				65E7E023195F1D75003A0280 /* craft.h */,
 				65E7E021195F1D75003A0280 /* Supporting Files */,
+				65E7E03A195F1DDB003A0280 /* Craft.swift */,
+				65E7E03C195F20B4003A0280 /* Promise.swift */,
 			);
 			path = craft;
 			sourceTree = "<group>";
@@ -152,6 +183,25 @@
 			productReference = 65E7E029195F1D75003A0280 /* craftTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
+		65E7E041195F21E9003A0280 /* craft Tests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 65E7E04B195F21E9003A0280 /* Build configuration list for PBXNativeTarget "craft Tests" */;
+			buildPhases = (
+				65E7E03E195F21E9003A0280 /* Sources */,
+				65E7E03F195F21E9003A0280 /* Frameworks */,
+				65E7E040195F21E9003A0280 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				65E7E04A195F21E9003A0280 /* PBXTargetDependency */,
+				65E7E04F195F50C9003A0280 /* PBXTargetDependency */,
+			);
+			name = "craft Tests";
+			productName = "craft Tests";
+			productReference = 65E7E042195F21E9003A0280 /* craft Tests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -165,6 +215,10 @@
 						CreatedOnToolsVersion = 6.0;
 					};
 					65E7E028195F1D75003A0280 = {
+						CreatedOnToolsVersion = 6.0;
+						TestTargetID = 65E7E01D195F1D75003A0280;
+					};
+					65E7E041195F21E9003A0280 = {
 						CreatedOnToolsVersion = 6.0;
 						TestTargetID = 65E7E01D195F1D75003A0280;
 					};
@@ -184,6 +238,7 @@
 			targets = (
 				65E7E01D195F1D75003A0280 /* craft */,
 				65E7E028195F1D75003A0280 /* craftTests */,
+				65E7E041195F21E9003A0280 /* craft Tests */,
 			);
 		};
 /* End PBXProject section */
@@ -203,6 +258,13 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		65E7E040195F21E9003A0280 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
@@ -210,6 +272,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				65E7E03B195F1DDB003A0280 /* Craft.swift in Sources */,
+				65E7E03D195F20B4003A0280 /* Promise.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -221,6 +285,13 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		65E7E03E195F21E9003A0280 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
@@ -228,6 +299,16 @@
 			isa = PBXTargetDependency;
 			target = 65E7E01D195F1D75003A0280 /* craft */;
 			targetProxy = 65E7E02B195F1D75003A0280 /* PBXContainerItemProxy */;
+		};
+		65E7E04A195F21E9003A0280 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 65E7E01D195F1D75003A0280 /* craft */;
+			targetProxy = 65E7E049195F21E9003A0280 /* PBXContainerItemProxy */;
+		};
+		65E7E04F195F50C9003A0280 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 65E7E01D195F1D75003A0280 /* craft */;
+			targetProxy = 65E7E04E195F50C9003A0280 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -316,6 +397,7 @@
 		65E7E035195F1D75003A0280 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
 				COMBINE_HIDPI_IMAGES = YES;
 				DEFINES_MODULE = YES;
 				DYLIB_COMPATIBILITY_VERSION = 1;
@@ -325,14 +407,17 @@
 				INFOPLIST_FILE = craft/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
+				PRODUCT_MODULE_NAME = craft;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 			};
 			name = Debug;
 		};
 		65E7E036195F1D75003A0280 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
 				COMBINE_HIDPI_IMAGES = YES;
 				DEFINES_MODULE = YES;
 				DYLIB_COMPATIBILITY_VERSION = 1;
@@ -342,6 +427,7 @@
 				INFOPLIST_FILE = craft/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
+				PRODUCT_MODULE_NAME = craft;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
 			};
@@ -381,6 +467,38 @@
 			};
 			name = Release;
 		};
+		65E7E04C195F21E9003A0280 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(DEVELOPER_FRAMEWORKS_DIR)",
+					"$(inherited)",
+				);
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				INFOPLIST_FILE = "craft Tests/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
+				METAL_ENABLE_DEBUG_INFO = YES;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Debug;
+		};
+		65E7E04D195F21E9003A0280 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(DEVELOPER_FRAMEWORKS_DIR)",
+					"$(inherited)",
+				);
+				INFOPLIST_FILE = "craft Tests/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
+				METAL_ENABLE_DEBUG_INFO = NO;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -400,6 +518,7 @@
 				65E7E036195F1D75003A0280 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		65E7E037195F1D75003A0280 /* Build configuration list for PBXNativeTarget "craftTests" */ = {
 			isa = XCConfigurationList;
@@ -408,6 +527,16 @@
 				65E7E039195F1D75003A0280 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		65E7E04B195F21E9003A0280 /* Build configuration list for PBXNativeTarget "craft Tests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				65E7E04C195F21E9003A0280 /* Debug */,
+				65E7E04D195F21E9003A0280 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
