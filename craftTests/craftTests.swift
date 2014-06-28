@@ -110,10 +110,10 @@ class craftTests: XCTestCase
         });
     }
     
-    func testMultiThen()
+    func testMultiThenResolve()
     {
-        let expectation1 = expectationWithDescription("multiThen1");
-        let expectation2 = expectationWithDescription("multiThen2");
+        let expectation1 = expectationWithDescription("multiThenResolve1");
+        let expectation2 = expectationWithDescription("multiThenResolve2");
         
         let p : Promise = createImmediateResolvePromise()
         
@@ -124,6 +124,31 @@ class craftTests: XCTestCase
         })
         
         p.then({
+            (value: AnyObject?) -> AnyObject? in
+            expectation2.fulfill()
+            return nil
+        })
+        
+        waitForExpectationsWithTimeout(5.0, handler: {
+            (error: NSError!) -> () in
+            
+        });
+    }
+    
+    func testMultiThenReject()
+    {
+        let expectation1 = expectationWithDescription("multiThenReject1");
+        let expectation2 = expectationWithDescription("multiThenReject2");
+        
+        let p : Promise = createImmediateRejectPromise()
+        
+        p.catch({
+            (value: AnyObject?) -> AnyObject? in
+            expectation1.fulfill()
+            return nil
+        })
+        
+        p.catch({
             (value: AnyObject?) -> AnyObject? in
             expectation2.fulfill()
             return nil
