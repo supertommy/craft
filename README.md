@@ -111,6 +111,7 @@ Craft.all(a).then({
     
     if let v: BulkResult = value as? BulkResult
     {
+        //v.data is the array of the Promise results
         println(v.data)
     }
     
@@ -141,9 +142,13 @@ Craft.allSettled(a).then({
         let s: Array<AnyObject?> = v.data
         for obj: AnyObject? in s
         {
+            //each obj in the array is a SettledResult with state and value
             if let o = obj as? SettledResult
             {
+                //fulfilled or rejected
                 println(o.state.toRaw())
+                
+                //the result of the promise
                 println(o.value)
             }
         }
