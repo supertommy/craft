@@ -11,6 +11,8 @@ There are also a few Objective-C implementations for iOS. Check out [this articl
 
 ### Usage
 
+In order to use Craft in your project, you can take all the .swift files inside the directory `craft/craft`. Ideally this would just be a framework you add to your project but it is not totally clear how to do that for a framework that is strictly Swift.
+
 Basic usage is going to be very similar to most JavaScript implementations as Swift supports closures natively.
 
 ```
@@ -163,6 +165,10 @@ Again, the result is wrapped inside a `BulkResult`. The `data` property of `Bulk
 ### Tests
 
 Other example usages can be found in the tests. They are in the cleverly named `craftTests.swift`.
+
+### Notes
+
+It is recommended that you work with or through the `Promise` type. There is a `Deferred` type that does the heavy lifting but it is not intended to be used directly. Any creation should also be done through the `Craft` class. It is not recommended to create your own `Promise` or `Deferred` instances via their constructors.
 
 ### Suggestions, Improvements, Questions
 
