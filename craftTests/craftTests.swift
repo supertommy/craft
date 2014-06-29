@@ -407,6 +407,44 @@ class craftTests: XCTestCase
         });
     }
     
+    func testAllSettled()
+    {
+        let expectation = expectationWithDescription("allSettled");
+        
+        let a = [
+            createImmediateResolvePromise(),
+            createImmediateRejectPromise(),
+            createImmediateResolvePromise()
+        ]
+        
+        Craft.allSettled(a).then({
+            (value: AnyObject?) -> AnyObject? in
+            
+            if let v: BulkResult = value as? BulkResult
+            {
+                let s: Array<AnyObject?> = v.data
+                for obj: AnyObject? in s
+                {
+                    if let o = obj as? SettledResult
+                    {
+                        println(o.state.toRaw())
+                        println(o.value)
+                    }
+                }
+                
+                XCTAssertEqual(a.count, s.count)
+            }
+            expectation.fulfill()
+            
+            return nil
+        })
+        
+        waitForExpectationsWithTimeout(5.0, handler: {
+            (error: NSError!) -> () in
+            
+        });
+    }
+    
     //MARK: helpers
     func createImmediateResolvePromise() -> Promise
     {

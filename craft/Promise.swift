@@ -8,7 +8,7 @@
 
 import Foundation
 
-enum PromiseState
+enum PromiseState: Int
 {
     case PENDING, FULFILLED, REJECTED
 }

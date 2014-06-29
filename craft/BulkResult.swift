@@ -17,3 +17,15 @@ class BulkResult
         self.data = data
     }
 }
+
+class SettledResult
+{
+    let state: PromiseState
+    let value: AnyObject?
+    
+    init(state: PromiseState, value: AnyObject?)
+    {
+        self.state = state
+        self.value = value
+    }
+}
