@@ -77,7 +77,25 @@ promise.then({
 
 In the above example, the first resolve returns the string "hello". That is then passed into the next resolve as it's incoming value parameter so when we print `value + " world"` we get "hello world".
 
-### Arrays or Promises
+When you return a Promise in a resolve closure, the result of that promise will be sent to the next resolve in the chain.
+
+```
+promise.then({
+    (value: AnyObject?) -> AnyObject? in
+    
+    return somePromise
+})
+.then({
+    (value: AnyObject?) -> AnyObject? in
+    
+    println(value)
+    //value is the result of the returned promise above
+    
+    return nil
+})
+```
+
+### Arrays of Promises
 
 Sometimes you will want multiple Promises to resolve before doing anything because they all depend on each other or some other reason. As a convenience, there is an `all()` method that can handle this.
 
