@@ -139,7 +139,7 @@ Again, the result is wrapped inside a `BulkResult`. The `data` property of `Bulk
 
 ### Tests
 
-Other example usages can be found in the tests. They are in the cleverly named `craftTests.swift` file.
+Other example usages can be found in the tests. They are in the cleverly named `craftTests.swift`.
 
 ### Suggestions, Improvements, Questions
 
