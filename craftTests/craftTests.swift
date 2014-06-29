@@ -110,6 +110,7 @@ class craftTests: XCTestCase
         });
     }
     
+    //spec 2.2.6
     func testMultiThenResolve()
     {
         let expectation1 = expectationWithDescription("multiThenResolve1");
@@ -135,6 +136,7 @@ class craftTests: XCTestCase
         });
     }
     
+    //spec 2.2.6
     func testMultiThenReject()
     {
         let expectation1 = expectationWithDescription("multiThenReject1");
@@ -262,6 +264,31 @@ class craftTests: XCTestCase
         });
     }
     
+    func testChainTypeError()
+    {
+        let expectation = expectationWithDescription("chainTypeError");
+        
+        let p : Promise = createWillResolvePromise()
+        p.then({
+            (value: AnyObject?) -> AnyObject? in
+            return p
+        })?
+        .catch({
+            (value: AnyObject?) -> AnyObject? in
+            
+            println(value)
+            
+            expectation.fulfill()
+            
+            return nil;
+        })
+        
+        waitForExpectationsWithTimeout(5.0, handler: {
+            (error: NSError!) -> () in
+            
+        });
+    }
+    
     func testPromiseResolve()
     {
         let expectation = expectationWithDescription("resolve");
@@ -309,7 +336,7 @@ class craftTests: XCTestCase
     
     func testPromiseCatch()
     {
-        let expectation = expectationWithDescription("catch");
+        let expectation = expectationWithDescription("catch")
         
         let p = createWillRejectPromise()
         
@@ -317,6 +344,58 @@ class craftTests: XCTestCase
             (value: AnyObject?) -> AnyObject? in
             
             println(value)
+            expectation.fulfill()
+            
+            return nil
+        })
+        
+        waitForExpectationsWithTimeout(5.0, handler: {
+            (error: NSError!) -> () in
+            
+        });
+    }
+    
+    func testAllResolve()
+    {
+        let expectation = expectationWithDescription("allResolve");
+        
+        let a = [
+            createImmediateResolvePromise(),
+            createImmediateResolvePromise(),
+            createImmediateResolvePromise()
+        ]
+        
+        Craft.all(a).then({
+            (value: AnyObject?) -> AnyObject? in
+            
+            if let v: BulkResult = value as? BulkResult
+            {
+                XCTAssertEqual(a.count, v.data.count)
+            }
+            expectation.fulfill()
+            
+            return nil
+        })
+        
+        waitForExpectationsWithTimeout(5.0, handler: {
+            (error: NSError!) -> () in
+    
+        });
+    }
+    
+    func testAllReject()
+    {
+        let expectation = expectationWithDescription("allReject");
+        
+        let a = [
+            createImmediateResolvePromise(),
+            createImmediateRejectPromise(),
+            createImmediateResolvePromise()
+        ]
+        
+        Craft.all(a).catch({
+            (value: AnyObject?) -> AnyObject? in
+            
             expectation.fulfill()
             
             return nil

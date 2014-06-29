@@ -34,4 +34,48 @@ class Craft
         
         return d.promise;
     }
+    
+    class func all(promises: Array<Promise>) -> Promise
+    {
+        let d = Deferred.create()
+        
+        var results: Array<AnyObject?> = Array()
+        let count = promises.count
+        var fulfilled = 0
+        
+        func attach(promise: Promise, index: Int) -> ()
+        {
+            promise.then({
+                (value: AnyObject?) -> AnyObject? in
+                
+                results[index] = value
+                ++fulfilled
+                
+                if (fulfilled >= count)
+                {
+                    //seems to be issues passing an Array<AnyObject?> as AnyObject?
+                    //that's why this is wrapped in a BulkResult
+                    d.resolve(BulkResult(data: results))
+                }
+                
+                return nil
+            }, reject: {
+                (value: AnyObject?) -> AnyObject? in
+                
+                d.reject(value)
+                
+                return nil
+            })
+        }
+        
+        for var i = 0; i < count; ++i
+        {
+            results.append(nil)
+            let promise = promises[i]
+            
+            attach(promise, i)
+        }
+        
+        return d.promise
+    }
 }
