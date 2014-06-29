@@ -170,12 +170,12 @@ class craftTests: XCTestCase
         p.then({
             (value: AnyObject?) -> AnyObject? in
             return "hello"
-        })?
+        })
         .then({
             (value: AnyObject?) -> AnyObject? in
             let v: String = value as String
             return v + " world"
-        })?
+        })
         .then({
             (value: AnyObject?) -> AnyObject? in
             let v: String = value as String
@@ -198,7 +198,7 @@ class craftTests: XCTestCase
         let expectation = expectationWithDescription("chainableResolveWithHole");
         
         let p : Promise = createWillResolvePromise()
-        let p2 = p.then()!
+        let p2 = p.then()
         
         p2.then({
             (value: AnyObject?) -> AnyObject? in
@@ -221,7 +221,7 @@ class craftTests: XCTestCase
         let expectation = expectationWithDescription("chainableRejectWithHole");
         
         let p : Promise = createWillRejectPromise()
-        let p2 = p.then()!
+        let p2 = p.then()
         
         p2.catch({
             (value: AnyObject?) -> AnyObject? in
@@ -247,7 +247,7 @@ class craftTests: XCTestCase
         p.then({
             (value: AnyObject?) -> AnyObject? in
             return self.createWillResolvePromise("promise value")
-        })?
+        })
         .then({
             (value: AnyObject?) -> AnyObject? in
             
@@ -272,7 +272,7 @@ class craftTests: XCTestCase
         p.then({
             (value: AnyObject?) -> AnyObject? in
             return p
-        })?
+        })
         .catch({
             (value: AnyObject?) -> AnyObject? in
             
