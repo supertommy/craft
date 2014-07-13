@@ -422,7 +422,7 @@ class craftTests: XCTestCase
             
             if let v: BulkResult = value as? BulkResult
             {
-                let s: Array<AnyObject?> = v.data
+                let s: [AnyObject?] = v.data
                 for obj: AnyObject? in s
                 {
                     if let o = obj as? SettledResult

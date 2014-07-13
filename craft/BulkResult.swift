@@ -10,9 +10,9 @@ import Foundation
 
 class BulkResult
 {
-    let data: Array<AnyObject?>
+    let data: [AnyObject?]
     
-    init(data: Array<AnyObject?>)
+    init(data: [AnyObject?])
     {
         self.data = data
     }

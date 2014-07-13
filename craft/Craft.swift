@@ -54,11 +54,11 @@ class Craft
      * results will be in the same order as the array of promises
      * @return Promise
      */
-    class func all(promises: Array<Promise>) -> Promise
+    class func all(promises: [Promise]) -> Promise
     {
         let d = Deferred.create()
         
-        var results: Array<AnyObject?> = Array()
+        var results: [AnyObject?] = Array()
         let count = promises.count
         var fulfilled = 0
         
@@ -72,7 +72,7 @@ class Craft
                 
                 if (fulfilled >= count)
                 {
-                    //seems to be issues passing an Array<AnyObject?> as AnyObject?
+                    //seems to be issues passing an [AnyObject?] as AnyObject?
                     //that's why this is wrapped in a BulkResult
                     d.resolve(BulkResult(data: results))
                 }
@@ -98,11 +98,11 @@ class Craft
         return d.promise
     }
     
-    class func allSettled(promises: Array<Promise>) -> Promise
+    class func allSettled(promises: [Promise]) -> Promise
     {
         let d = Deferred.create()
         
-        var results: Array<AnyObject?> = Array()
+        var results: [AnyObject?] = Array()
         let count = promises.count
         var fulfilled = 0
         
@@ -114,7 +114,7 @@ class Craft
                 
                 if (fulfilled >= count)
                 {
-                    //seems to be issues passing an Array<AnyObject?> as AnyObject?
+                    //seems to be issues passing an [AnyObject?] as AnyObject?
                     //that's why this is wrapped in a BulkResult
                     d.resolve(BulkResult(data: results))
                 }

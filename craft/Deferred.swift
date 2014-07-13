@@ -26,7 +26,7 @@ class Deferred
     
     var promise: Promise!
     
-    var children: Array<Child>
+    var children: [Child]
     
     class func create() -> Deferred
     {
