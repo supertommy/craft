@@ -17,7 +17,7 @@ Basic usage is going to be very similar to most JavaScript implementations as Sw
 
 ```
 let promise = Craft.promise({
-    (resolve: (value: AnyObject?) -> (), reject: (value: AnyObject?) -> ()) -> () in
+    (resolve: (value: Value) -> (), reject: (value: Value) -> ()) -> () in
     
     //some async action
     let queue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0)
@@ -38,13 +38,13 @@ let promise = Craft.promise({
 })
 
 promise.then({
-    (value: AnyObject?) -> AnyObject? in
+    (value: Value) -> Value in
     
     //resolved successfully!
     
     return nil
 }, reject: {
-    (value: AnyObject?) -> AnyObject? in
+    (value: Value) -> Value in
     
     //failed for some reason
     
@@ -58,16 +58,16 @@ When the work is done, the resolve or reject closures passed into `promise.then`
 
 ### Chaining
 
-Chaining is one of the defining features of the Promises/A+ standard. The resolve or reject handlers passed into `then` can return nil or a value. The return type of those closures is `AnyObject?`. These closures have a return type because their returned values are then passed into the next resolve or reject handler.
+Chaining is one of the defining features of the Promises/A+ standard. The resolve or reject handlers passed into `then` can return nil or a value. The return type of those closures is `Value` which is a `typealias` for `Any?`. These closures have a return type because their returned values are then passed into the next resolve or reject handler.
 
 ```
 promise.then({
-    (value: AnyObject?) -> AnyObject? in
+    (value: Value) -> Value in
     
     return "hello"
 })
 .then({
-    (value: AnyObject?) -> AnyObject? in
+    (value: Value) -> Value in
     
     println(value + " world")
     //hello world
@@ -83,12 +83,12 @@ When you return a Promise in a resolve closure, the result of that promise will 
 
 ```
 promise.then({
-    (value: AnyObject?) -> AnyObject? in
+    (value: Value) -> Value in
     
     return somePromise
 })
 .then({
-    (value: AnyObject?) -> AnyObject? in
+    (value: Value) -> Value in
     
     println(value)
     //value is the result of the returned promise above
@@ -109,19 +109,19 @@ let a = [
 ]
 
 Craft.all(a).then({
-    (value: AnyObject?) -> AnyObject? in
+    (value: Value) -> Value in
     
-    if let v: BulkResult = value as? BulkResult
+    if let v: [Value] = value as? [Value]
     {
-        //v.data is the array of the Promise results
-        println(v.data)
+        //v is an array of the Promise results
+        println(v)
     }
     
     return nil
 })
 ```
 
-The `value` passed into the resolve will be of type `BulkResult`. This is mainly due to some issues with passing an `Array<AnyObject?>` as `AnyObject?`. `BulkResult` just wraps the actual result array in the `data` property. This is something to be looked into but for now this is how it works.
+The `value` passed into the resolve will be an `Array` of results from each Promise.
 
 If any of the Promises in the array is rejected then the entire thing is rejected. `Craft.all()` only resolves if all the Promises resolve and rejects immediately if any of them fail.
 
@@ -137,21 +137,19 @@ let a = [
 ]
 
 Craft.allSettled(a).then({
-    (value: AnyObject?) -> AnyObject? in
+    (value: Value) -> Value in
     
-    if let v: BulkResult = value as? BulkResult
+    if let v: [Value] = value as? [Value]
     {
-        let s: Array<AnyObject?> = v.data
-        for obj: AnyObject? in s
+        for var i = 0; i < v.count; ++i
         {
-            //each obj in the array is a SettledResult with state and value
-            if let o = obj as? SettledResult
+            if let result = v[i] as SettledResult
             {
                 //fulfilled or rejected
-                println(o.state.toRaw())
-                
+                println(result.state.toRaw())
+            
                 //the result of the promise
-                println(o.value)
+                println(result.value)
             }
         }
     }
@@ -160,7 +158,7 @@ Craft.allSettled(a).then({
 })
 ```
 
-Again, the result is wrapped inside a `BulkResult`. The `data` property of `BulkResult` is an `Array<SettledResult>`. A `SettledResult` has a `state` and `value` property to denote the state (FULFILLED or REJECTED) and the resulting value of the promise. `Craft.allSettled` will always resolve.
+The result is an `Array` of `SettledResult` objects that wrap each Promise result. A `SettledResult` has a `state` and `value` property to denote the state (FULFILLED or REJECTED) and the resulting value of the promise. `Craft.allSettled` will always resolve.
 
 ### Tests
 
