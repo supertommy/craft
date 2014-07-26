@@ -48,7 +48,7 @@ class Deferred
         children.append(c)
     }
     
-    func resolve(value: Any?)
+    func resolve(value: Value)
     {
         promise.state = PromiseState.FULFILLED
         
@@ -58,7 +58,7 @@ class Deferred
         }
     }
     
-    func reject(value: Any?)
+    func reject(value: Value)
     {
         promise.state = PromiseState.REJECTED
         
@@ -66,7 +66,7 @@ class Deferred
         {
             if let r = c.onRejected
             {
-                let v: Any? = r(value: value)
+                let v: Value? = r(value: value)
                 
                 //only fire once
                 c.onRejected = nil
@@ -80,11 +80,11 @@ class Deferred
     }
     
     //MARK: private methods
-    private func resolveChild(child: Child, value: Any?)
+    private func resolveChild(child: Child, value: Value)
     {
         if let r = child.onResolved
         {
-            let v: Any? = r(value: value)
+            let v: Value = r(value: value)
             
             //only fire once
             child.onResolved = nil
@@ -102,14 +102,14 @@ class Deferred
                 let x = v as Promise
                 promise.state = x.state
                 x.then({
-                    (value: Any?) -> Any? in
+                    (value: Value) -> Value in
                     
                     println(value)
                     self.resolve(value)
                     
                     return nil
                     }, reject: {
-                        (value: Any?) -> Any? in
+                        (value: Value) -> Value in
                         
                         self.reject(value)
                         
@@ -128,7 +128,7 @@ class Deferred
         child.promise.deffered.resolve(value)
     }
     
-    private func valueIsPromise(value: Any?) -> Bool
+    private func valueIsPromise(value: Value) -> Bool
     {
         if let val: Any = value
         {
@@ -138,7 +138,7 @@ class Deferred
         return false
     }
     
-    private func resolutionIsTypeError(value: Any?) -> Bool
+    private func resolutionIsTypeError(value: Value) -> Bool
     {
         if (valueIsPromise(value))
         {

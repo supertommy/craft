@@ -8,8 +8,9 @@
 
 import Foundation
 
-public typealias Result = (value: Any?) -> Any?
-public typealias Action = (resolve: (value: Any?) -> (), reject: (value: Any?) -> ()) -> ()
+public typealias Value = Any?
+public typealias Result = (value: Value) -> Value
+public typealias Action = (resolve: (value: Value) -> (), reject: (value: Value) -> ()) -> ()
 
 public class Craft
 {
@@ -59,14 +60,14 @@ public class Craft
     {
         let d = Deferred.create()
         
-        var results: [Any?] = Array()
+        var results: [Value] = Array()
         let count = promises.count
         var fulfilled = 0
         
         func attach(promise: Promise, index: Int) -> ()
         {
             promise.then({
-                (value: Any?) -> Any? in
+                (value: Value) -> Value in
                 
                 results[index] = value
                 ++fulfilled
@@ -78,7 +79,7 @@ public class Craft
                 
                 return nil
             }, reject: {
-                (value: Any?) -> Any? in
+                (value: Value) -> Value in
                 
                 d.reject(value)
                 
@@ -107,13 +108,13 @@ public class Craft
     {
         let d = Deferred.create()
         
-        var results: [Any?] = Array()
+        var results: [Value] = Array()
         let count = promises.count
         var fulfilled = 0
         
         func attach(promise: Promise, index: Int) -> ()
         {
-            func response(value: Any?) -> Any?
+            func response(value: Value) -> Value
             {
                 ++fulfilled
                 
@@ -126,14 +127,14 @@ public class Craft
             }
             
             promise.then({
-                (value: Any?) -> Any? in
+                (value: Value) -> Value in
                 
                 let res = SettledResult(state: PromiseState.FULFILLED, value: value)
                 results[index] = res
                 
                 return response(value)
             }, reject: {
-                (value: Any?) -> Any? in
+                (value: Value) -> Value in
                 
                 let res = SettledResult(state: PromiseState.REJECTED, value: value)
                 results[index] = res

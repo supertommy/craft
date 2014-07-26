@@ -11,9 +11,9 @@ import Foundation
 public class SettledResult
 {
     public let state: PromiseState
-    public let value: Any?
+    public let value: Value
     
-    init(state: PromiseState, value: Any?)
+    init(state: PromiseState, value: Value)
     {
         self.state = state
         self.value = value
