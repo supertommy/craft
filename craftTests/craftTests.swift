@@ -38,17 +38,21 @@ class craftTests: XCTestCase
         let expectation = expectationWithDescription("resolveAsync");
         
         let p : Promise = createImmediateResolvePromise()
-        p.then({
+        p.then {
             (value: Value) -> Value in
             
             expectation.fulfill()
             
             return nil;
-        })
+        }
         
+        /**
+         * proceeding uses of waitForExpectationsWithTimeout will use trailing closure syntax
+         * and shorthand argument names for conciseness
+         */
         waitForExpectationsWithTimeout(5.0, handler: {
             (error: NSError!) -> () in
-            
+            println(error)
         });
     }
     
@@ -66,10 +70,7 @@ class craftTests: XCTestCase
             return nil;
         })
         
-        waitForExpectationsWithTimeout(5.0, handler: {
-            (error: NSError!) -> () in
-            
-        });
+        waitForExpectationsWithTimeout(5.0) { println($0) };
     }
     
     func testThenable()
@@ -87,10 +88,7 @@ class craftTests: XCTestCase
             return nil;
         })
         
-        waitForExpectationsWithTimeout(5.0, handler: {
-            (error: NSError!) -> () in
-            
-        });
+        waitForExpectationsWithTimeout(5.0) { println($0) };
     }
     
     func testThenableNoReject()
@@ -98,16 +96,13 @@ class craftTests: XCTestCase
         let expectation = expectationWithDescription("thenableNoReject");
         
         let p : Promise = createImmediateResolvePromise()
-        p.then({
+        p.then {
             (value: Value) -> Value in
             expectation.fulfill()
             return nil;
-        })
+        }
         
-        waitForExpectationsWithTimeout(5.0, handler: {
-            (error: NSError!) -> () in
-            
-        });
+        waitForExpectationsWithTimeout(5.0) { println($0) };
     }
     
     //spec 2.2.6
@@ -118,22 +113,19 @@ class craftTests: XCTestCase
         
         let p : Promise = createImmediateResolvePromise()
         
-        p.then({
+        p.then {
             (value: Value) -> Value in
             expectation1.fulfill()
             return nil
-        })
+        }
         
-        p.then({
+        p.then {
             (value: Value) -> Value in
             expectation2.fulfill()
             return nil
-        })
+        }
         
-        waitForExpectationsWithTimeout(5.0, handler: {
-            (error: NSError!) -> () in
-            
-        });
+        waitForExpectationsWithTimeout(5.0) { println($0) };
     }
     
     //spec 2.2.6
@@ -144,22 +136,19 @@ class craftTests: XCTestCase
         
         let p : Promise = createImmediateRejectPromise()
         
-        p.catch({
+        p.catch {
             (value: Value) -> Value in
             expectation1.fulfill()
             return nil
-        })
+        }
         
-        p.catch({
+        p.catch {
             (value: Value) -> Value in
             expectation2.fulfill()
             return nil
-        })
+        }
         
-        waitForExpectationsWithTimeout(5.0, handler: {
-            (error: NSError!) -> () in
-            
-        });
+        waitForExpectationsWithTimeout(5.0) { println($0) };
     }
     
     func testChainable()
@@ -167,16 +156,16 @@ class craftTests: XCTestCase
         let expectation = expectationWithDescription("chainable");
         
         let p : Promise = createWillResolvePromise()
-        p.then({
+        p.then {
             (value: Value) -> Value in
             return "hello"
-        })
-        .then({
+        }
+        .then {
             (value: Value) -> Value in
             let v: String = value as String
             return v + " world"
-        })
-        .then({
+        }
+        .then {
             (value: Value) -> Value in
             let v: String = value as String
             let s = v + ", swift"
@@ -184,12 +173,9 @@ class craftTests: XCTestCase
             expectation.fulfill()
             
             return nil;
-        })
+        }
         
-        waitForExpectationsWithTimeout(5.0, handler: {
-            (error: NSError!) -> () in
-            
-        });
+        waitForExpectationsWithTimeout(5.0) { println($0) };
     }
     
     //spec 2.2.7.3
@@ -200,19 +186,16 @@ class craftTests: XCTestCase
         let p : Promise = createWillResolvePromise()
         let p2 = p.then()
         
-        p2.then({
+        p2.then {
             (value: Value) -> Value in
             
             println(value)
             expectation.fulfill()
             
             return nil
-        })
+        }
         
-        waitForExpectationsWithTimeout(5.0, handler: {
-            (error: NSError!) -> () in
-            
-        });
+        waitForExpectationsWithTimeout(5.0) { println($0) };
     }
     
     //spec 2.2.7.4
@@ -223,19 +206,16 @@ class craftTests: XCTestCase
         let p : Promise = createWillRejectPromise()
         let p2 = p.then()
         
-        p2.catch({
+        p2.catch {
             (value: Value) -> Value in
             
             println(value)
             expectation.fulfill()
             
             return nil
-        })
+        }
         
-        waitForExpectationsWithTimeout(5.0, handler: {
-            (error: NSError!) -> () in
-            
-        });
+        waitForExpectationsWithTimeout(5.0) { println($0) };
     }
     
     //spec 2.3.2
@@ -244,11 +224,11 @@ class craftTests: XCTestCase
         let expectation = expectationWithDescription("chainablePromise");
         
         let p : Promise = createWillResolvePromise()
-        p.then({
+        p.then {
             (value: Value) -> Value in
             return self.createWillResolvePromise("promise value")
-        })
-        .then({
+        }
+        .then {
             (value: Value) -> Value in
             
             println(value)
@@ -256,12 +236,9 @@ class craftTests: XCTestCase
             expectation.fulfill()
             
             return nil;
-        })
+        }
         
-        waitForExpectationsWithTimeout(5.0, handler: {
-            (error: NSError!) -> () in
-            
-        });
+        waitForExpectationsWithTimeout(5.0) { println($0) };
     }
     
     func testChainTypeError()
@@ -269,11 +246,11 @@ class craftTests: XCTestCase
         let expectation = expectationWithDescription("chainTypeError");
         
         let p : Promise = createWillResolvePromise()
-        p.then({
+        p.then {
             (value: Value) -> Value in
             return p
-        })
-        .catch({
+        }
+        .catch {
             (value: Value) -> Value in
             
             println(value)
@@ -281,12 +258,9 @@ class craftTests: XCTestCase
             expectation.fulfill()
             
             return nil;
-        })
+        }
         
-        waitForExpectationsWithTimeout(5.0, handler: {
-            (error: NSError!) -> () in
-            
-        });
+        waitForExpectationsWithTimeout(5.0) { println($0) };
     }
     
     func testPromiseResolve()
@@ -295,19 +269,16 @@ class craftTests: XCTestCase
         
         let p = createWillResolvePromise()
         
-        p.then({
+        p.then {
             (value: Value) -> Value in
             
             println(value)
             expectation.fulfill()
             
             return nil;
-        })
+        }
         
-        waitForExpectationsWithTimeout(5.0, handler: {
-            (error: NSError!) -> () in
-            
-        });
+        waitForExpectationsWithTimeout(5.0) { println($0) };
     }
     
     func testPromiseReject()
@@ -328,10 +299,7 @@ class craftTests: XCTestCase
             return nil
         })
         
-        waitForExpectationsWithTimeout(5.0, handler: {
-            (error: NSError!) -> () in
-            
-        });
+        waitForExpectationsWithTimeout(5.0) { println($0) };
     }
     
     func testPromiseCatch()
@@ -340,19 +308,16 @@ class craftTests: XCTestCase
         
         let p = createWillRejectPromise()
         
-        p.catch({
+        p.catch {
             (value: Value) -> Value in
             
             println(value)
             expectation.fulfill()
             
             return nil
-        })
+        }
         
-        waitForExpectationsWithTimeout(5.0, handler: {
-            (error: NSError!) -> () in
-            
-        });
+        waitForExpectationsWithTimeout(5.0) { println($0) };
     }
     
     func testAllResolve()
@@ -365,7 +330,7 @@ class craftTests: XCTestCase
             createImmediateResolvePromise()
         ]
         
-        Craft.all(a).then({
+        Craft.all(a).then {
             (value: Value) -> Value in
             
             if let v: [Value] = value as? [Value]
@@ -384,12 +349,9 @@ class craftTests: XCTestCase
             }
             
             return nil
-        })
+        }
         
-        waitForExpectationsWithTimeout(5.0, handler: {
-            (error: NSError!) -> () in
-    
-        });
+        waitForExpectationsWithTimeout(5.0) { println($0) };
     }
     
     func testAllReject()
@@ -402,18 +364,15 @@ class craftTests: XCTestCase
             createImmediateResolvePromise()
         ]
         
-        Craft.all(a).catch({
+        Craft.all(a).catch {
             (value: Value) -> Value in
             
             expectation.fulfill()
             
             return nil
-        })
+        }
         
-        waitForExpectationsWithTimeout(5.0, handler: {
-            (error: NSError!) -> () in
-            
-        });
+        waitForExpectationsWithTimeout(5.0) { println($0) };
     }
     
     func testAllSettled()
@@ -426,10 +385,8 @@ class craftTests: XCTestCase
             createImmediateResolvePromise()
         ]
         
-        Craft.allSettled(a).then({
-            (value: Value) -> Value in
-            
-            if let v: [Value] = value as? [Value]
+        Craft.allSettled(a).then {
+            if let v: [Value] = $0 as? [Value]
             {
                 XCTAssertEqual(a.count, v.count)
                 
@@ -448,31 +405,28 @@ class craftTests: XCTestCase
             }
             
             return nil
-        })
+        }
         
-        waitForExpectationsWithTimeout(5.0, handler: {
-            (error: NSError!) -> () in
-            
-        });
+        waitForExpectationsWithTimeout(5.0) { println($0) };
     }
     
     //MARK: helpers
     func createImmediateResolvePromise() -> Promise
     {
-        return Craft.promise({
+        return Craft.promise {
             (resolve: (value: Value) -> (), reject: (value: Value) -> ()) -> () in
             
             resolve(value: "immediate resolve")
-        })
+        }
     }
     
     func createImmediateRejectPromise() -> Promise
     {
-        return Craft.promise({
+        return Craft.promise {
             (resolve: (value: Value) -> (), reject: (value: Value) -> ()) -> () in
             
             reject(value: "immediate reject")
-        })
+        }
     }
     
     func createWillResolvePromise() -> Promise
@@ -482,7 +436,7 @@ class craftTests: XCTestCase
     
     func createWillResolvePromise(value: Value) -> Promise
     {
-        return Craft.promise({
+        return Craft.promise {
             (resolve: (value: Value) -> (), reject: (value: Value) -> ()) -> () in
             
             //some async action
@@ -494,7 +448,7 @@ class craftTests: XCTestCase
                     resolve(value: value)
                 })
             })
-        });
+        };
     }
     
     func createWillRejectPromise() -> Promise
@@ -504,7 +458,7 @@ class craftTests: XCTestCase
     
     func createWillRejectPromise(value: Value) -> Promise
     {
-        return Craft.promise({
+        return Craft.promise {
             (resolve: (value: Value) -> (), reject: (value: Value) -> ()) -> () in
             
             //some async action
@@ -516,6 +470,6 @@ class craftTests: XCTestCase
                     reject(value: value)
                 })
             })
-        });
+        };
     }
 }
