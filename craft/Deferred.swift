@@ -8,7 +8,7 @@
 
 import Foundation
 
-typealias Result = (value: AnyObject?) -> AnyObject?
+public typealias Result = (value: AnyObject?) -> AnyObject?
 
 class Deferred
 {

@@ -8,16 +8,16 @@
 
 import Foundation
 
-typealias Action = (resolve: (value: AnyObject?) -> (), reject: (value: AnyObject)? -> ()) -> ()
+public typealias Action = (resolve: (value: AnyObject?) -> (), reject: (value: AnyObject)? -> ()) -> ()
 
-class Craft
+public class Craft
 {
     /**
      * creates a Promise
      * You generally want to use the constructor that takes an Action closure
      * @return Promise
      */
-    class func promise() -> Promise
+    public class func promise() -> Promise
     {
         return promise(nil)
     }
@@ -29,7 +29,7 @@ class Craft
      *
      * @return Promise
      */
-    class func promise(action: Action?) -> Promise
+    public class func promise(action: Action?) -> Promise
     {
         let d = Deferred.create()
         
@@ -54,7 +54,7 @@ class Craft
      * results will be in the same order as the array of promises
      * @return Promise
      */
-    class func all(promises: [Promise]) -> Promise
+    public class func all(promises: [Promise]) -> Promise
     {
         let d = Deferred.create()
         
@@ -98,7 +98,7 @@ class Craft
         return d.promise
     }
     
-    class func allSettled(promises: [Promise]) -> Promise
+    public class func allSettled(promises: [Promise]) -> Promise
     {
         let d = Deferred.create()
         

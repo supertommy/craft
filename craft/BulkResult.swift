@@ -8,9 +8,9 @@
 
 import Foundation
 
-class BulkResult
+public class BulkResult
 {
-    let data: [AnyObject?]
+    public let data: [AnyObject?]
     
     init(data: [AnyObject?])
     {
@@ -18,10 +18,10 @@ class BulkResult
     }
 }
 
-class SettledResult
+public class SettledResult
 {
     let state: PromiseState
-    let value: AnyObject?
+    public let value: AnyObject?
     
     init(state: PromiseState, value: AnyObject?)
     {

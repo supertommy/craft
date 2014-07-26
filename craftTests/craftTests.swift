@@ -423,14 +423,6 @@ class craftTests: XCTestCase
             if let v: BulkResult = value as? BulkResult
             {
                 let s: [AnyObject?] = v.data
-                for obj: AnyObject? in s
-                {
-                    if let o = obj as? SettledResult
-                    {
-                        println(o.state.toRaw())
-                        println(o.value)
-                    }
-                }
                 
                 XCTAssertEqual(a.count, s.count)
             }
