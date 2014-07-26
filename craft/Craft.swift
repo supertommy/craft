@@ -8,7 +8,8 @@
 
 import Foundation
 
-public typealias Action = (resolve: (value: AnyObject?) -> (), reject: (value: AnyObject)? -> ()) -> ()
+public typealias Result = (value: Any?) -> Any?
+public typealias Action = (resolve: (value: Any?) -> (), reject: (value: Any?) -> ()) -> ()
 
 public class Craft
 {
@@ -58,28 +59,26 @@ public class Craft
     {
         let d = Deferred.create()
         
-        var results: [AnyObject?] = Array()
+        var results: [Any?] = Array()
         let count = promises.count
         var fulfilled = 0
         
         func attach(promise: Promise, index: Int) -> ()
         {
             promise.then({
-                (value: AnyObject?) -> AnyObject? in
+                (value: Any?) -> Any? in
                 
                 results[index] = value
                 ++fulfilled
                 
                 if (fulfilled >= count)
                 {
-                    //seems to be issues passing an [AnyObject?] as AnyObject?
-                    //that's why this is wrapped in a BulkResult
-                    d.resolve(BulkResult(data: results))
+                    d.resolve(results)
                 }
                 
                 return nil
             }, reject: {
-                (value: AnyObject?) -> AnyObject? in
+                (value: Any?) -> Any? in
                 
                 d.reject(value)
                 
@@ -108,35 +107,33 @@ public class Craft
     {
         let d = Deferred.create()
         
-        var results: [AnyObject?] = Array()
+        var results: [Any?] = Array()
         let count = promises.count
         var fulfilled = 0
         
         func attach(promise: Promise, index: Int) -> ()
         {
-            func response(value: AnyObject?) -> AnyObject?
+            func response(value: Any?) -> Any?
             {
                 ++fulfilled
                 
                 if (fulfilled >= count)
                 {
-                    //seems to be issues passing an [AnyObject?] as AnyObject?
-                    //that's why this is wrapped in a BulkResult
-                    d.resolve(BulkResult(data: results))
+                    d.resolve(results)
                 }
                 
                 return nil
             }
             
             promise.then({
-                (value: AnyObject?) -> AnyObject? in
+                (value: Any?) -> Any? in
                 
                 let res = SettledResult(state: PromiseState.FULFILLED, value: value)
                 results[index] = res
                 
                 return response(value)
             }, reject: {
-                (value: AnyObject?) -> AnyObject? in
+                (value: Any?) -> Any? in
                 
                 let res = SettledResult(state: PromiseState.REJECTED, value: value)
                 results[index] = res

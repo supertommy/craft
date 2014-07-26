@@ -13,7 +13,7 @@
 		65E7E03B195F1DDB003A0280 /* Craft.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65E7E03A195F1DDB003A0280 /* Craft.swift */; };
 		65E7E03D195F20B4003A0280 /* Promise.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65E7E03C195F20B4003A0280 /* Promise.swift */; };
 		65E7E053195F5494003A0280 /* Deferred.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65E7E052195F5494003A0280 /* Deferred.swift */; };
-		65E7E057195FAE0C003A0280 /* BulkResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65E7E056195FAE0C003A0280 /* BulkResult.swift */; };
+		65E7E057195FAE0C003A0280 /* SettledResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65E7E056195FAE0C003A0280 /* SettledResult.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -36,7 +36,7 @@
 		65E7E03A195F1DDB003A0280 /* Craft.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Craft.swift; sourceTree = "<group>"; };
 		65E7E03C195F20B4003A0280 /* Promise.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Promise.swift; sourceTree = "<group>"; };
 		65E7E052195F5494003A0280 /* Deferred.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Deferred.swift; sourceTree = "<group>"; };
-		65E7E056195FAE0C003A0280 /* BulkResult.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BulkResult.swift; sourceTree = "<group>"; };
+		65E7E056195FAE0C003A0280 /* SettledResult.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettledResult.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -83,7 +83,7 @@
 				65E7E03A195F1DDB003A0280 /* Craft.swift */,
 				65E7E052195F5494003A0280 /* Deferred.swift */,
 				65E7E03C195F20B4003A0280 /* Promise.swift */,
-				65E7E056195FAE0C003A0280 /* BulkResult.swift */,
+				65E7E056195FAE0C003A0280 /* SettledResult.swift */,
 				65E7E021195F1D75003A0280 /* Supporting Files */,
 			);
 			path = craft;
@@ -224,7 +224,7 @@
 			files = (
 				65E7E03B195F1DDB003A0280 /* Craft.swift in Sources */,
 				65E7E053195F5494003A0280 /* Deferred.swift in Sources */,
-				65E7E057195FAE0C003A0280 /* BulkResult.swift in Sources */,
+				65E7E057195FAE0C003A0280 /* SettledResult.swift in Sources */,
 				65E7E03D195F20B4003A0280 /* Promise.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

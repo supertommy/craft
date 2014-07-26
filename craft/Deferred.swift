@@ -8,8 +8,6 @@
 
 import Foundation
 
-public typealias Result = (value: AnyObject?) -> AnyObject?
-
 class Deferred
 {
     class Child
@@ -50,7 +48,7 @@ class Deferred
         children.append(c)
     }
     
-    func resolve(value: AnyObject?)
+    func resolve(value: Any?)
     {
         promise.state = PromiseState.FULFILLED
         
@@ -60,7 +58,7 @@ class Deferred
         }
     }
     
-    func reject(value: AnyObject?)
+    func reject(value: Any?)
     {
         promise.state = PromiseState.REJECTED
         
@@ -68,7 +66,7 @@ class Deferred
         {
             if let r = c.onRejected
             {
-                let v: AnyObject? = r(value: value)
+                let v: Any? = r(value: value)
                 
                 //only fire once
                 c.onRejected = nil
@@ -82,11 +80,11 @@ class Deferred
     }
     
     //MARK: private methods
-    private func resolveChild(child: Child, value: AnyObject?)
+    private func resolveChild(child: Child, value: Any?)
     {
         if let r = child.onResolved
         {
-            let v: AnyObject? = r(value: value)
+            let v: Any? = r(value: value)
             
             //only fire once
             child.onResolved = nil
@@ -104,13 +102,14 @@ class Deferred
                 let x = v as Promise
                 promise.state = x.state
                 x.then({
-                    (value: AnyObject?) -> AnyObject? in
+                    (value: Any?) -> Any? in
                     
+                    println(value)
                     self.resolve(value)
                     
                     return nil
                     }, reject: {
-                        (value: AnyObject?) -> AnyObject? in
+                        (value: Any?) -> Any? in
                         
                         self.reject(value)
                         
@@ -129,9 +128,9 @@ class Deferred
         child.promise.deffered.resolve(value)
     }
     
-    private func valueIsPromise(value: AnyObject?) -> Bool
+    private func valueIsPromise(value: Any?) -> Bool
     {
-        if let val: AnyObject = value
+        if let val: Any = value
         {
             return val is Promise
         }
@@ -139,7 +138,7 @@ class Deferred
         return false
     }
     
-    private func resolutionIsTypeError(value: AnyObject?) -> Bool
+    private func resolutionIsTypeError(value: Any?) -> Bool
     {
         if (valueIsPromise(value))
         {

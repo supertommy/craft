@@ -39,7 +39,7 @@ class craftTests: XCTestCase
         
         let p : Promise = createImmediateResolvePromise()
         p.then({
-            (value: AnyObject?) -> AnyObject? in
+            (value: Any?) -> Any? in
             
             expectation.fulfill()
             
@@ -59,7 +59,7 @@ class craftTests: XCTestCase
         
         let p : Promise = createImmediateRejectPromise()
         p.then(nil, reject: {
-            (value: AnyObject?) -> AnyObject? in
+            (value: Any?) -> Any? in
             
             expectation.fulfill()
             
@@ -78,12 +78,12 @@ class craftTests: XCTestCase
         
         let p : Promise = createImmediateResolvePromise()
         p.then({
-            (value: AnyObject?) -> AnyObject? in
+            (value: Any?) -> Any? in
             expectation.fulfill()
             return nil;
         },
         reject: {
-            (value: AnyObject?) -> AnyObject? in
+            (value: Any?) -> Any? in
             return nil;
         })
         
@@ -99,7 +99,7 @@ class craftTests: XCTestCase
         
         let p : Promise = createImmediateResolvePromise()
         p.then({
-            (value: AnyObject?) -> AnyObject? in
+            (value: Any?) -> Any? in
             expectation.fulfill()
             return nil;
         })
@@ -119,13 +119,13 @@ class craftTests: XCTestCase
         let p : Promise = createImmediateResolvePromise()
         
         p.then({
-            (value: AnyObject?) -> AnyObject? in
+            (value: Any?) -> Any? in
             expectation1.fulfill()
             return nil
         })
         
         p.then({
-            (value: AnyObject?) -> AnyObject? in
+            (value: Any?) -> Any? in
             expectation2.fulfill()
             return nil
         })
@@ -145,13 +145,13 @@ class craftTests: XCTestCase
         let p : Promise = createImmediateRejectPromise()
         
         p.catch({
-            (value: AnyObject?) -> AnyObject? in
+            (value: Any?) -> Any? in
             expectation1.fulfill()
             return nil
         })
         
         p.catch({
-            (value: AnyObject?) -> AnyObject? in
+            (value: Any?) -> Any? in
             expectation2.fulfill()
             return nil
         })
@@ -168,16 +168,16 @@ class craftTests: XCTestCase
         
         let p : Promise = createWillResolvePromise()
         p.then({
-            (value: AnyObject?) -> AnyObject? in
+            (value: Any?) -> Any? in
             return "hello"
         })
         .then({
-            (value: AnyObject?) -> AnyObject? in
+            (value: Any?) -> Any? in
             let v: String = value as String
             return v + " world"
         })
         .then({
-            (value: AnyObject?) -> AnyObject? in
+            (value: Any?) -> Any? in
             let v: String = value as String
             let s = v + ", swift"
             
@@ -201,7 +201,7 @@ class craftTests: XCTestCase
         let p2 = p.then()
         
         p2.then({
-            (value: AnyObject?) -> AnyObject? in
+            (value: Any?) -> Any? in
             
             println(value)
             expectation.fulfill()
@@ -224,7 +224,7 @@ class craftTests: XCTestCase
         let p2 = p.then()
         
         p2.catch({
-            (value: AnyObject?) -> AnyObject? in
+            (value: Any?) -> Any? in
             
             println(value)
             expectation.fulfill()
@@ -245,11 +245,11 @@ class craftTests: XCTestCase
         
         let p : Promise = createWillResolvePromise()
         p.then({
-            (value: AnyObject?) -> AnyObject? in
+            (value: Any?) -> Any? in
             return self.createWillResolvePromise("promise value")
         })
         .then({
-            (value: AnyObject?) -> AnyObject? in
+            (value: Any?) -> Any? in
             
             println(value)
             
@@ -270,11 +270,11 @@ class craftTests: XCTestCase
         
         let p : Promise = createWillResolvePromise()
         p.then({
-            (value: AnyObject?) -> AnyObject? in
+            (value: Any?) -> Any? in
             return p
         })
         .catch({
-            (value: AnyObject?) -> AnyObject? in
+            (value: Any?) -> Any? in
             
             println(value)
             
@@ -296,7 +296,7 @@ class craftTests: XCTestCase
         let p = createWillResolvePromise()
         
         p.then({
-            (value: AnyObject?) -> AnyObject? in
+            (value: Any?) -> Any? in
             
             println(value)
             expectation.fulfill()
@@ -317,10 +317,10 @@ class craftTests: XCTestCase
         let p = createWillRejectPromise()
         
         p.then({
-            (value: AnyObject?) -> AnyObject? in
+            (value: Any?) -> Any? in
                 return nil;
         }, reject: {
-            (value: AnyObject?) -> AnyObject? in
+            (value: Any?) -> Any? in
             
             println(value)
             expectation.fulfill()
@@ -341,7 +341,7 @@ class craftTests: XCTestCase
         let p = createWillRejectPromise()
         
         p.catch({
-            (value: AnyObject?) -> AnyObject? in
+            (value: Any?) -> Any? in
             
             println(value)
             expectation.fulfill()
@@ -366,13 +366,22 @@ class craftTests: XCTestCase
         ]
         
         Craft.all(a).then({
-            (value: AnyObject?) -> AnyObject? in
+            (value: Any?) -> Any? in
             
-            if let v: BulkResult = value as? BulkResult
+            if let v: [Any?] = value as? [Any?]
             {
-                XCTAssertEqual(a.count, v.data.count)
+                XCTAssertEqual(a.count, v.count)
+                
+                for var i = 0; i < v.count; ++i
+                {
+                    if let result = v[i]
+                    {
+                        //createImmediateResolvePromise resolves with String
+                        XCTAssertTrue(result is String)
+                    }
+                }
+                expectation.fulfill()
             }
-            expectation.fulfill()
             
             return nil
         })
@@ -394,7 +403,7 @@ class craftTests: XCTestCase
         ]
         
         Craft.all(a).catch({
-            (value: AnyObject?) -> AnyObject? in
+            (value: Any?) -> Any? in
             
             expectation.fulfill()
             
@@ -418,15 +427,25 @@ class craftTests: XCTestCase
         ]
         
         Craft.allSettled(a).then({
-            (value: AnyObject?) -> AnyObject? in
+            (value: Any?) -> Any? in
             
-            if let v: BulkResult = value as? BulkResult
+            if let v: [Any?] = value as? [Any?]
             {
-                let s: [AnyObject?] = v.data
+                XCTAssertEqual(a.count, v.count)
                 
-                XCTAssertEqual(a.count, s.count)
+                for var i = 0; i < v.count; ++i
+                {
+                    if let result = v[i]
+                    {
+                        //allSettled resolutions are wrapped in SettleResult to determine state
+                        XCTAssertTrue(result is SettledResult)
+                        
+                        //createImmediate[Resolve|Reject]Promise resolves/rejects with String
+                        XCTAssertTrue((result as SettledResult).value is String)
+                    }
+                }
+                expectation.fulfill()
             }
-            expectation.fulfill()
             
             return nil
         })
@@ -441,7 +460,7 @@ class craftTests: XCTestCase
     func createImmediateResolvePromise() -> Promise
     {
         return Craft.promise({
-            (resolve: (value: AnyObject?) -> (), reject: (value: AnyObject?) -> ()) -> () in
+            (resolve: (value: Any?) -> (), reject: (value: Any?) -> ()) -> () in
             
             resolve(value: "immediate resolve")
         })
@@ -450,7 +469,7 @@ class craftTests: XCTestCase
     func createImmediateRejectPromise() -> Promise
     {
         return Craft.promise({
-            (resolve: (value: AnyObject?) -> (), reject: (value: AnyObject?) -> ()) -> () in
+            (resolve: (value: Any?) -> (), reject: (value: Any?) -> ()) -> () in
             
             reject(value: "immediate reject")
         })
@@ -461,10 +480,10 @@ class craftTests: XCTestCase
         return createWillResolvePromise("resolved")
     }
     
-    func createWillResolvePromise(value: AnyObject?) -> Promise
+    func createWillResolvePromise(value: Any?) -> Promise
     {
         return Craft.promise({
-            (resolve: (value: AnyObject?) -> (), reject: (value: AnyObject?) -> ()) -> () in
+            (resolve: (value: Any?) -> (), reject: (value: Any?) -> ()) -> () in
             
             //some async action
             let queue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0)
@@ -483,10 +502,10 @@ class craftTests: XCTestCase
         return createWillRejectPromise("rejected")
     }
     
-    func createWillRejectPromise(value: AnyObject?) -> Promise
+    func createWillRejectPromise(value: Any?) -> Promise
     {
         return Craft.promise({
-            (resolve: (value: AnyObject?) -> (), reject: (value: AnyObject?) -> ()) -> () in
+            (resolve: (value: Any?) -> (), reject: (value: Any?) -> ()) -> () in
             
             //some async action
             let queue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0)

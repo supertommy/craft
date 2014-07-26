@@ -8,22 +8,12 @@
 
 import Foundation
 
-public class BulkResult
-{
-    public let data: [AnyObject?]
-    
-    init(data: [AnyObject?])
-    {
-        self.data = data
-    }
-}
-
 public class SettledResult
 {
-    let state: PromiseState
-    public let value: AnyObject?
+    public let state: PromiseState
+    public let value: Any?
     
-    init(state: PromiseState, value: AnyObject?)
+    init(state: PromiseState, value: Any?)
     {
         self.state = state
         self.value = value
