@@ -98,6 +98,12 @@ public class Craft
         return d.promise
     }
     
+    /**
+     * Executes an array of Promises and results in an array of results
+     * from each executed Promise after all Promises have been resolved
+     * or rejected
+     * @return Promise
+     */
     public class func allSettled(promises: [Promise]) -> Promise
     {
         let d = Deferred.create()

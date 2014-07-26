@@ -81,8 +81,8 @@ class Deferred
         }
     }
     
-    //MARK: should be private
-    func resolveChild(child: Child, value: AnyObject?)
+    //MARK: private methods
+    private func resolveChild(child: Child, value: AnyObject?)
     {
         if let r = child.onResolved
         {
@@ -129,7 +129,7 @@ class Deferred
         child.promise.deffered.resolve(value)
     }
     
-    func valueIsPromise(value: AnyObject?) -> Bool
+    private func valueIsPromise(value: AnyObject?) -> Bool
     {
         if let val: AnyObject = value
         {
@@ -139,7 +139,7 @@ class Deferred
         return false
     }
     
-    func resolutionIsTypeError(value: AnyObject?) -> Bool
+    private func resolutionIsTypeError(value: AnyObject?) -> Bool
     {
         if (valueIsPromise(value))
         {
