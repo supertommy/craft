@@ -15,7 +15,7 @@ In order to use Craft in your project, you can take all the .swift files inside 
 
 Basic usage is going to be very similar to most JavaScript implementations as Swift supports closures natively.
 
-```
+```swift
 let promise = Craft.promise({
     (resolve: (value: Value) -> (), reject: (value: Value) -> ()) -> () in
     
