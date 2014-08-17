@@ -16,7 +16,7 @@ public class Craft
 {
     /**
      * creates a Promise
-     * You generally want to use the constructor that takes an Action closure
+     * You generally want to use the version that takes an Action closure
      * @return Promise
      */
     public class func promise() -> Promise

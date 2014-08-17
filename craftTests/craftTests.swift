@@ -9,6 +9,26 @@
 import XCTest
 import craft
 
+/**
+ * custom infix operator as a shorthand for GCD operation where 'lhs' is an async
+ * task that is followed by 'rhs' which a task on the main thread
+ *
+ * uses @autoclosure so that statement can be as concise as:
+ *
+ * usleep(250 * 1000) ~> resolve(value: value)
+ * 
+ * which is to sleep in the background and then resolve on the main thread
+ */
+infix operator ~> {}
+func ~> (lhs: @autoclosure () -> Any, rhs: @autoclosure () -> ())
+{
+    let queue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0)
+    dispatch_async(queue, {
+        lhs();
+        dispatch_sync(dispatch_get_main_queue(), rhs)
+    })
+}
+
 //Promises/A+ spec: http://promises-aplus.github.io/promises-spec/
 class craftTests: XCTestCase
 {
@@ -440,14 +460,7 @@ class craftTests: XCTestCase
             (resolve: (value: Value) -> (), reject: (value: Value) -> ()) -> () in
             
             //some async action
-            let queue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0)
-            dispatch_async(queue, {
-                usleep(250 * 1000)
-                
-                dispatch_sync(dispatch_get_main_queue(), {
-                    resolve(value: value)
-                })
-            })
+            usleep(250 * 1000) ~> resolve(value: value)
         };
     }
     
@@ -462,14 +475,7 @@ class craftTests: XCTestCase
             (resolve: (value: Value) -> (), reject: (value: Value) -> ()) -> () in
             
             //some async action
-            let queue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0)
-            dispatch_async(queue, {
-                usleep(250 * 1000)
-                
-                dispatch_sync(dispatch_get_main_queue(), {
-                    reject(value: value)
-                })
-            })
-        };
+            usleep(250 * 1000) ~> reject(value: value)
+        }
     }
 }
