@@ -1,4 +1,4 @@
-craft
+Craft
 =====
 
 A promise library based on the Promises/A+ standard written in Swift for iOS and OSX.
@@ -15,7 +15,7 @@ In order to use Craft in your project, you can take all the .swift files inside 
 
 Basic usage is going to be very similar to most JavaScript implementations as Swift supports closures natively.
 
-```
+```swift
 let promise = Craft.promise({
     (resolve: (value: Value) -> (), reject: (value: Value) -> ()) -> () in
     
@@ -60,7 +60,7 @@ When the work is done, the resolve or reject closures passed into `promise.then`
 
 Chaining is one of the defining features of the Promises/A+ standard. The resolve or reject handlers passed into `then` can return nil or a value. The return type of those closures is `Value` which is a `typealias` for `Any?`. These closures have a return type because their returned values are then passed into the next resolve or reject handler.
 
-```
+```swift
 promise.then({
     (value: Value) -> Value in
     
@@ -81,7 +81,7 @@ In the above example, the first resolve returns the string "hello". That is then
 
 When you return a Promise in a resolve closure, the result of that promise will be sent to the next resolve in the chain.
 
-```
+```swift
 promise.then({
     (value: Value) -> Value in
     
@@ -101,7 +101,7 @@ promise.then({
 
 Sometimes you will want multiple Promises to resolve before doing anything because they all depend on each other or some other reason. As a convenience, there is an `all()` method that can handle this.
 
-```
+```swift
 let a = [
     somePromise,
     someOtherPromise,
@@ -129,7 +129,7 @@ If any of the Promises in the array is rejected then the entire thing is rejecte
 
 Sometimes you don't want all the Promises to resolve in order to proceed so there is a convenience method called `Craft.allSettled()`. It works in very much the same way as `Craft.all()` except it will return the state of each Promise in the array.
 
-```
+```swift
 let a = [
     somePromise,
     someOtherPromise,
