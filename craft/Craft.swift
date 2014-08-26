@@ -112,10 +112,9 @@ public class Craft
         let count = promises.count
         var fulfilled = 0
         
-        func attach(promise: Promise, index: Int) -> ()
-        {
-            func response(value: Value) -> Value
-            {
+        let response = {
+            (value: Value) -> Value in
+            
                 ++fulfilled
                 
                 if (fulfilled >= count)
@@ -125,7 +124,9 @@ public class Craft
                 
                 return nil
             }
-            
+        
+        func attach(promise: Promise, index: Int) -> ()
+        {
             promise.then({
                 (value: Value) -> Value in
                 
