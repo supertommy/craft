@@ -3,6 +3,9 @@ Craft
 
 A promise library based on the Promises/A+ standard written in Swift for iOS and OSX.
 
+**Note on Updating to Xcode 6 Beta 6**
+You may get an obscure runtime error if you've compiled this project with an older version of Xcode in which case you can use [Cmd + Shift + Alt + K](https://twitter.com/objctoswift/status/504095974231265280) to do a thorough clean.
+
 ### What are Promises?
 
 Promises are a way to handle asynchronous operations. They are a proxy for values that are currently unknown due to waiting for the network, long and complex computations, or anything else that does not immediately resolve. Promises are commonly used in JavaScript in libraries like jQuery. Most JavaScript implementations conform to the [Promises/A+](http://promises-aplus.github.io/promises-spec/) standard like [Q](https://github.com/kriskowal/q) or [RSVP](https://github.com/tildeio/rsvp.js/).
