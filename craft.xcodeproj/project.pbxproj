@@ -7,6 +7,11 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		65230D9C1A8FCCBA00D6EB25 /* Craft.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65E7E03A195F1DDB003A0280 /* Craft.swift */; };
+		65230D9D1A8FCCBA00D6EB25 /* Deferred.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65E7E052195F5494003A0280 /* Deferred.swift */; };
+		65230D9E1A8FCCBA00D6EB25 /* Promise.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65E7E03C195F20B4003A0280 /* Promise.swift */; };
+		65230D9F1A8FCCBA00D6EB25 /* SettledResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65E7E056195FAE0C003A0280 /* SettledResult.swift */; };
+		65230DA01A8FCCD800D6EB25 /* craft.h in Headers */ = {isa = PBXBuildFile; fileRef = 65E7E023195F1D75003A0280 /* craft.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		65E7E024195F1D75003A0280 /* craft.h in Headers */ = {isa = PBXBuildFile; fileRef = 65E7E023195F1D75003A0280 /* craft.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		65E7E02A195F1D75003A0280 /* craft.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 65E7E01E195F1D75003A0280 /* craft.framework */; };
 		65E7E031195F1D75003A0280 /* craftTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65E7E030195F1D75003A0280 /* craftTests.swift */; };
@@ -27,6 +32,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		65230D831A8FCBB200D6EB25 /* craft_ios.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = craft_ios.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		65E7E01E195F1D75003A0280 /* craft.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = craft.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		65E7E022195F1D75003A0280 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		65E7E023195F1D75003A0280 /* craft.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = craft.h; sourceTree = "<group>"; };
@@ -40,6 +46,13 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		65230D7F1A8FCBB200D6EB25 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		65E7E01A195F1D75003A0280 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -72,6 +85,7 @@
 			children = (
 				65E7E01E195F1D75003A0280 /* craft.framework */,
 				65E7E029195F1D75003A0280 /* craftTests.xctest */,
+				65230D831A8FCBB200D6EB25 /* craft_ios.framework */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -117,6 +131,14 @@
 /* End PBXGroup section */
 
 /* Begin PBXHeadersBuildPhase section */
+		65230D801A8FCBB200D6EB25 /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				65230DA01A8FCCD800D6EB25 /* craft.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		65E7E01B195F1D75003A0280 /* Headers */ = {
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
@@ -128,6 +150,24 @@
 /* End PBXHeadersBuildPhase section */
 
 /* Begin PBXNativeTarget section */
+		65230D821A8FCBB200D6EB25 /* craft_ios */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 65230D9A1A8FCBB200D6EB25 /* Build configuration list for PBXNativeTarget "craft_ios" */;
+			buildPhases = (
+				65230D7E1A8FCBB200D6EB25 /* Sources */,
+				65230D7F1A8FCBB200D6EB25 /* Frameworks */,
+				65230D801A8FCBB200D6EB25 /* Headers */,
+				65230D811A8FCBB200D6EB25 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = craft_ios;
+			productName = craft_ios;
+			productReference = 65230D831A8FCBB200D6EB25 /* craft_ios.framework */;
+			productType = "com.apple.product-type.framework";
+		};
 		65E7E01D195F1D75003A0280 /* craft */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 65E7E034195F1D75003A0280 /* Build configuration list for PBXNativeTarget "craft" */;
@@ -173,6 +213,9 @@
 				LastUpgradeCheck = 0600;
 				ORGANIZATIONNAME = "Tommy Leung";
 				TargetAttributes = {
+					65230D821A8FCBB200D6EB25 = {
+						CreatedOnToolsVersion = 6.1.1;
+					};
 					65E7E01D195F1D75003A0280 = {
 						CreatedOnToolsVersion = 6.0;
 					};
@@ -196,11 +239,19 @@
 			targets = (
 				65E7E01D195F1D75003A0280 /* craft */,
 				65E7E028195F1D75003A0280 /* craftTests */,
+				65230D821A8FCBB200D6EB25 /* craft_ios */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
+		65230D811A8FCBB200D6EB25 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		65E7E01C195F1D75003A0280 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -218,6 +269,17 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		65230D7E1A8FCBB200D6EB25 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				65230D9C1A8FCCBA00D6EB25 /* Craft.swift in Sources */,
+				65230D9D1A8FCCBA00D6EB25 /* Deferred.swift in Sources */,
+				65230D9E1A8FCCBA00D6EB25 /* Promise.swift in Sources */,
+				65230D9F1A8FCCBA00D6EB25 /* SettledResult.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		65E7E019195F1D75003A0280 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -248,6 +310,53 @@
 /* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
+		65230D961A8FCBB200D6EB25 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CONFIGURATION_BUILD_DIR = "$(BUILD_DIR)/$(CONFIGURATION)";
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				INFOPLIST_FILE = "$(SRCROOT)/craft/Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				MTL_ENABLE_DEBUG_INFO = YES;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		65230D971A8FCBB200D6EB25 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CONFIGURATION_BUILD_DIR = "$(BUILD_DIR)/$(CONFIGURATION)";
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				INFOPLIST_FILE = "$(SRCROOT)/craft/Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				MTL_ENABLE_DEBUG_INFO = NO;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
 		65E7E032195F1D75003A0280 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -405,6 +514,15 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		65230D9A1A8FCBB200D6EB25 /* Build configuration list for PBXNativeTarget "craft_ios" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				65230D961A8FCBB200D6EB25 /* Debug */,
+				65230D971A8FCBB200D6EB25 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		65E7E018195F1D75003A0280 /* Build configuration list for PBXProject "craft" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
