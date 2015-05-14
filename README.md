@@ -1,6 +1,8 @@
 Craft
 =====
 
+[![Join the chat at https://gitter.im/supertommy/craft](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/supertommy/craft?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+
 A promise library based on the Promises/A+ standard written in Swift for iOS and OSX.
 
 ### What are Promises?
