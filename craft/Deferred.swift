@@ -99,7 +99,7 @@ class Deferred
             if (valueIsPromise(v))
             {
                 //see 2.3.2
-                let x = v as Promise
+                let x = v as! Promise
                 promise.state = x.state
                 x.then({
                     (value: Value) -> Value in
@@ -142,7 +142,7 @@ class Deferred
     {
         if (valueIsPromise(value))
         {
-            if (value as Promise === promise)
+            if (value as! Promise === promise)
             {
                 return true
             }

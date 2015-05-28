@@ -39,7 +39,7 @@ public class Promise
     
     public func then() -> Promise
     {
-        return then(nil, nil)
+        return then(nil, reject: nil)
     }
     
     public func catch(reject: Result) -> Promise
