@@ -1,6 +1,8 @@
 Craft
 =====
 
+[![Join the chat at https://gitter.im/supertommy/craft](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/supertommy/craft?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+
 A promise library based on the Promises/A+ standard written in Swift for iOS and OSX.
 
 ### What are Promises?
@@ -11,7 +13,7 @@ There are also a few Objective-C implementations for iOS. Check out [this articl
 
 ### Usage
 
-In order to use Craft in your project, you can take all the .swift files inside the directory `craft/craft`. Ideally this would just be a framework you add to your project but it is not totally clear how to do that for a framework that is strictly Swift.
+In order to use Craft in your project, you can take all the .swift files inside the directory `craft/craft` or you can build a framework for your desired target. The project has targets for OSX and iOS. The OSX target creates `craft.framework` and the iOS target creates `craft_ios.framework`. You should then be able to include the frameworks as normal.
 
 Basic usage is going to be very similar to most JavaScript implementations as Swift supports closures natively.
 
