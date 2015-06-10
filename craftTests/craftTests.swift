@@ -20,7 +20,7 @@ import craft
  * which is to sleep in the background and then resolve on the main thread
  */
 infix operator ~> {}
-func ~> (lhs: () -> Any, rhs: () -> ())
+func ~> (@autoclosure(escaping) lhs: () -> Any, @autoclosure(escaping) rhs: () -> ())
 {
     let queue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0)
     dispatch_async(queue, {
@@ -455,7 +455,7 @@ class craftTests: XCTestCase
             (resolve: (value: Value) -> (), reject: (value: Value) -> ()) -> () in
             
             //some async action
-            { usleep(250 * 1000) } ~> { resolve(value: value) }
+            usleep(250 * 1000) ~> resolve(value: value)
         };
     }
     
@@ -470,7 +470,7 @@ class craftTests: XCTestCase
             (resolve: (value: Value) -> (), reject: (value: Value) -> ()) -> () in
             
             //some async action
-            { usleep(250 * 1000) } ~> { reject(value: value) }
+            usleep(250 * 1000) ~> reject(value: value)
         }
     }
 }
