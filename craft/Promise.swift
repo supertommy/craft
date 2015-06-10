@@ -42,7 +42,7 @@ public class Promise
         return then(nil, reject: nil)
     }
     
-    public func catch(reject: Result) -> Promise
+    public func `catch`(reject: Result) -> Promise
     {
         return then(nil, reject: reject)
     }

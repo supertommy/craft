@@ -104,7 +104,7 @@ class Deferred
                 x.then({
                     (value: Value) -> Value in
                     
-                    println(value)
+                    print(value)
                     self.resolve(value)
                     
                     return nil

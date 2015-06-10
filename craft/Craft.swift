@@ -92,7 +92,7 @@ public class Craft
             results.append(nil)
             let promise = promises[i]
             
-            attach(promise, i)
+            attach(promise, index: i)
         }
         
         return d.promise
@@ -149,7 +149,7 @@ public class Craft
             results.append(nil)
             let promise = promises[i]
             
-            attach(promise, i)
+            attach(promise, index: i)
         }
         
         return d.promise
